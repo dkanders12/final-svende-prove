@@ -1,0 +1,49 @@
+footer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 40px 100px;
+  margin-top: 40px;
+  background-color: #323540;
+  color: white;
+  align-items: center;
+  #info {
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 110px;
+    h2 {
+      font-size: 30px;
+    }
+  }
+  .sendEmail {
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    h3 {
+      font-size: 25px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: end;
+      gap: 4px;
+      input {
+        height: 35px;
+        width: 250px;
+        padding: 5px;
+        border: none;
+        border-radius: 5px;
+      }
+      button {
+        width: 150px;
+        height: 30px;
+        border-radius: 4px;
+        background-color: #5f657b;
+        color: #bdc0c9;
+        border: none;
+      }
+    }
+  }
+}

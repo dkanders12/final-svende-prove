@@ -1,0 +1,76 @@
+nav {
+  position: relative;
+  height: 137px;
+  background-image: url(../../assets/HeaderRoof.png);
+  background-position: center;
+  width: 100%;
+  background-size: cover;
+
+  #topNav {
+    display: flex;
+
+    justify-content: space-between;
+    padding: 50px 20px;
+
+    .burger-menu {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+  }
+
+  #lowerNav {
+    position: absolute;
+    top: 30px;
+    right: 20px;
+    display: flex;
+    height: 40px;
+
+    ul {
+      display: flex;
+      flex-direction: row;
+
+      li {
+        display: flex;
+        align-items: center;
+        a {
+          color: white;
+          padding: 10px 27px;
+          font-size: 20px;
+        }
+      }
+
+      a:hover {
+        color: #ac9fbb;
+      }
+
+      a.active-link {
+        color: #ac9fbb;
+      }
+    }
+    form {
+      display: flex;
+      align-items: center;
+      div {
+        background-color: gray;
+        padding: 3px 4px 3px 4px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        color: white;
+      }
+      input {
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        height: 30px;
+        border: none;
+        padding: 10px;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .burger-menu {
+      display: block;
+    }
+  }
+}
