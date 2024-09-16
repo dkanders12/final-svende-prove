@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { supabase } from "../../provider/LoginContoller"; // Make sure this path is correct
+import { supabase } from "../../providers/LoginController"; // Make sure this path is correct
 import { useNavigate } from "react-router-dom";
 import "./Login.scss";
 

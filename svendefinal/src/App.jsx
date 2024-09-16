@@ -3,6 +3,7 @@ import "./App.scss";
 import Footer from "./components/Footer/Footer";
 import Forside from "./pages/Forside";
 import Navbar from "./components/Navbar/Navbar";
+import LoginForm from "./components/Login/Login";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Navbar></Navbar>
       <Routes>
         <Route path="/" element={<Forside />}></Route>
+        <Route path="/Login" element={<LoginForm />}></Route>
       </Routes>
       <Footer></Footer>
     </>
