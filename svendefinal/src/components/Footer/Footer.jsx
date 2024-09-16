@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { MdAlternateEmail } from "react-icons/md";
 import "./Footer.scss";
 
 const Footer = () => {
@@ -15,14 +16,27 @@ const Footer = () => {
   return (
     <footer>
       <article id="info">
-        <h2>Bagtanker</h2>
-        <p>Øster Uttrupvej 1 9000 Aalborg</p>
-        <p>Tlf: 12345678 Email: info@bagtanker.dk</p>
+        <h2>MiCasa</h2>
+        <p>Øster Uttrupvej 5 9000 Aalborg</p>
+        <p>Email: info@homelands.dk Telefon: +45 1122 3344</p>
       </article>
-      <div className="sendEmail">
-        <h3>Tilmeld dig Bagtankers nyhedsbrev</h3>
-        <p>Få vores nyheder direkte i din indbakke</p>
+      <article id="middle">
+        <ul>
+          <li>forside</li>
+          <li>boliger</li>
+          <li>kontakt</li>
+          <li>Login</li>
+        </ul>
+      </article>
+      <article className="sendEmail">
+        <h3>Få drømmehuset i din indbakke</h3>
+        <p>
+          Tilmeld dig til vores nyhedsbrev og få nye boliger sendt direkte til
+          din indbakke
+        </p>
         <form onSubmit={handleSubmit}>
+          {" "}
+          <MdAlternateEmail id="mail"></MdAlternateEmail>
           <label htmlFor="email">
             <input
               type="email"
@@ -36,7 +50,7 @@ const Footer = () => {
             Tilmeld
           </button>
         </form>
-      </div>
+      </article>
     </footer>
   );
 };

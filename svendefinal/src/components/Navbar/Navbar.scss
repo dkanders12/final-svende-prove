@@ -1,7 +1,8 @@
 nav {
-  position: relative;
-  height: 137px;
-  background-image: url(../../assets/HeaderRoof.png);
+  z-index: 10;
+  position: absolute;
+  height: 138px;
+  background-image: url(../../assets/HeaderRoofCanvas.png);
   background-position: center;
   width: 100%;
   background-size: cover;

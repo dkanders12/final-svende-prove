@@ -1,0 +1,38 @@
+.employee-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
+  #gap {
+    display: flex;
+    gap: 30px;
+  }
+  #employee {
+    position: relative;
+    border: 1px solid black;
+    overflow: hidden;
+    margin-top: 30px;
+    img {
+      width: 300px;
+      height: 350px;
+      object-fit: contain;
+    }
+    #text-hover {
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      margin-bottom: -55px;
+      display: flex;
+      flex-direction: column;
+      background-color: rgba($color: #1d1e2c, $alpha: 0.9);
+      color: white;
+      padding: 10px;
+      transition: 1s;
+    }
+    #text-hover:hover {
+      margin-bottom: 0px;
+      transition: 1s;
+    }
+  }
+}
