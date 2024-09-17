@@ -36,6 +36,7 @@
     .top-left-details {
       display: flex;
       flex-direction: column;
+      width: 90%;
     }
     .top-middle-details {
       display: flex;
@@ -60,28 +61,44 @@
     display: flex;
     justify-content: space-between;
     gap: 40px;
-    .small-info-left {
+    padding: 0px 80px;
+    .small-info {
       display: flex;
-      width: 33%;
+      width: 300px;
       justify-content: space-between;
+      flex-wrap: wrap;
       ul {
         list-style-type: none;
+        li {
+          margin-top: 10px;
+        }
       }
     }
-    .small-info-middle {
+  }
+  .text-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 80px;
+    .main-text {
+      width: 765px;
       display: flex;
-      width: 33%;
-      justify-content: space-between;
+      flex-direction: column;
+      gap: 50px;
+      font-size: 17px;
       ul {
-        list-style-type: none;
+        li {
+          margin-top: 10px;
+          margin-left: 25px;
+        }
       }
     }
-    .small-info-right {
-      display: flex;
-      width: 33%;
-      justify-content: space-between;
-      ul {
-        list-style-type: none;
+    .employee-info {
+      width: 406px;
+      height: 214px;
+      img {
+        width: 60%;
+        height: 214px;
+        object-fit: cover;
       }
     }
   }

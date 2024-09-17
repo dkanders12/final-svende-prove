@@ -95,7 +95,7 @@ const EstateDetail = () => {
         </div>
       </article>
       <article className="estate-info">
-        <div className="small-info-left">
+        <div className="small-info">
           <ul>
             <li>Sagsnr.</li>
             <li>Boligareal</li>
@@ -111,7 +111,7 @@ const EstateDetail = () => {
             <li>{num_floors}</li>
           </ul>
         </div>
-        <div className="small-info-middle">
+        <div className="small-info">
           <ul>
             <li>Kælder</li>
             <li>Byggeår</li>
@@ -127,7 +127,7 @@ const EstateDetail = () => {
             <li>40 dage</li>
           </ul>
         </div>
-        <div className="small-info-right">
+        <div className="small-info">
           <ul>
             <li>Kontantpris</li>
             <li>Udbetaling</li>
@@ -144,39 +144,39 @@ const EstateDetail = () => {
           </ul>
         </div>
       </article>
-      <div className="city-info">
-        <h3>Location</h3>
-        <p></p>
-      </div>
-      <div className="energy-info">
-        <h3>Energy Label</h3>
-        <p>{energy_labels?.letter || "No energy label"}</p>
-      </div>
-      <div className="employee-info">
-        <h3>Contact Information</h3>
-        {employee_id && (
-          <>
-            <img
-              src={employee_id.image_url}
-              alt={employee_id.firstname}
-              className="employee-image"
-            />
-            <p>
-              <strong>Name:</strong> {employee_id.firstname}{" "}
-              {employee_id.lastname}
-            </p>
-            <p>
-              <strong>Position:</strong> {employee_id.position}
-            </p>
-            <p>
-              <strong>Phone:</strong> {employee_id.phone}
-            </p>
-            <p>
-              <strong>Email:</strong> {employee_id.email}
-            </p>
-          </>
-        )}
-      </div>
+      <article className="text-container">
+        <div className="main-text">
+          <ul>
+            <li>Elegant og herskabelig bolig opført i 1927</li>
+            <li>Højloftede stuer med originale detaljer</li>
+            <li>Spisekøkken fra Unoform med terrasseudgang</li>
+            <li>Stor 1. sal med fire værelser og et badeværelse</li>
+            <li>Evt. mulighed for at drive liberalt erhverv</li>
+            <li>Eftertragtet beliggenhed i Indre Hasseris</li>
+            <li>Nyanlagt terrasse</li>
+            <li>Gåafstand til by, skoler og butikker</li>
+          </ul>
+          <p>{description}</p>
+        </div>
+        <div className="employee-info">
+          <h3>Contact Information</h3>
+          {employee_id && (
+            <>
+              <img
+                src={employee_id.image_url}
+                alt={employee_id.firstname}
+                className="employee-image"
+              />
+              <p>
+                {employee_id.firstname} {employee_id.lastname}
+              </p>
+              <p>{employee_id.position}</p>
+              <p>{employee_id.phone}</p>
+              <p>{employee_id.email}</p>
+            </>
+          )}
+        </div>
+      </article>
     </section>
   );
 };
