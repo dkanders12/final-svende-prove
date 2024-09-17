@@ -133,26 +133,25 @@ const Reviews = () => {
       {/* Show the form only if the user is authenticated */}
       {isAuthenticated ? (
         <>
-          <button className="toggle-form-button" onClick={toggleForm}>
-            {showForm ? "Luk anmeldelsesformular" : "Skriv en anmeldelse"}
-          </button>
-
+          <div id="long-width">
+            <button className="toggle-form-button" onClick={toggleForm}>
+              {showForm ? "Luk anmeldelsesformular" : "Skriv en anmeldelse"}
+            </button>
+          </div>
           {showForm && (
             <div className="review-form">
               <form onSubmit={handleSubmit}>
                 <label>
-                  Titel:
                   <input
                     type="text"
                     name="title"
                     value={formValues.title}
                     onChange={handleInputChange}
-                    placeholder="Titel på anmeldelsen"
+                    placeholder="navn"
                     required
                   />
                 </label>
                 <label>
-                  Kommentar:
                   <textarea
                     name="content"
                     value={formValues.content}
@@ -161,7 +160,9 @@ const Reviews = () => {
                     required
                   ></textarea>
                 </label>
-                <button type="submit">Send</button>
+                <button id="fixbtn" type="submit">
+                  Send
+                </button>
               </form>
 
               {error && <p className="error-message">{error}</p>}

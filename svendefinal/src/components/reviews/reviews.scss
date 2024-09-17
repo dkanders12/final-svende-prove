@@ -1,42 +1,66 @@
 .reviews-container {
-  padding: 20px;
-  background-color: #f9f9f9;
-}
-
-.review {
-  padding: 15px;
-  background-color: #fff;
-  margin-bottom: 10px;
-  border-radius: 5px;
-}
-
-.review-form {
-  margin-top: 20px;
-  background-color: #f0f0f0;
-  padding: 20px;
-  border-radius: 5px;
-}
-
-.review-form label {
-  display: block;
-  margin-bottom: 10px;
-}
-
-.review-form input,
-.review-form textarea {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-}
+  .existing-reviews {
+    padding: 40px;
+    background-color: #f7ebec;
+    padding-left: 120px;
+    border-radius: 5px;
+    width: 100%;
+  }
 
-.toggle-form-button {
-  background-color: #6f4b81;
-  color: #fff;
-  padding: 10px 15px;
-  border: none;
-  cursor: pointer;
-}
+  .review-form {
+    background-color: #59656f;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .review-form label {
+    display: block;
+  }
+  .review-form input,
+  .review-form textarea {
+    width: 400px;
+    margin-top: 20px;
+    padding: 10px;
+  }
+  .review-form textarea {
+    height: 200px;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+  }
+  #fixbtn {
+    width: 80px;
+    height: 40px;
+    margin-top: 10px;
+  }
+  #long-width {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #6f4b81;
+    .toggle-form-button {
+      border-left: solid white 1px;
+      border-right: solid white 1px;
+      background-color: #6f4b81;
+      color: #fff;
+      padding: 10px 15px;
+      border-top: none;
+      border-bottom: none;
+      cursor: pointer;
+    }
 
-.toggle-form-button:hover {
-  background-color: #533362;
+    .toggle-form-button:hover {
+      background-color: #533362;
+    }
+  }
 }
