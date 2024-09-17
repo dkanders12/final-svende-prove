@@ -1,8 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
 
 // Initialize Supabase client (example)
-const supabaseUrl = "https://your-supabase-url";
-const supabaseKey = "your-supabase-key";
+const supabaseUrl = "https://jlrktvbllusppxumstik.supabase.co";
+const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const fetchEstateById = async (id) => {
@@ -10,16 +10,29 @@ export const fetchEstateById = async (id) => {
     .from("estates")
     .select(
       `
-      id,
-      address,
-      price,
-      num_rooms,
-      ground_space,
-      estate_types (name),
-      cities (zipcode, name),
-      estate_image_rel (images (image_url)),
-      energy_labels (letter)
-    `
+        id,
+        address,
+        price,
+        payout,
+        gross,
+        net,
+        cost,
+        num_floors,
+        num_rooms,
+        floor_space,
+        ground_space,
+        basement_space,
+        year_construction,
+        year_rebuilt,
+        description,
+        num_clicks,
+        floorplan,
+        employee_id (firstname, lastname, position, image_url, phone, email),
+        estate_types (name),
+        cities (zipcode, name),
+        estate_image_rel (images (image_url)),
+        energy_labels (letter)
+      `
     )
     .eq("id", id)
     .single(); // Get single estate by ID
