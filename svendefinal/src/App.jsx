@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar/Navbar";
 import LoginForm from "./components/Login/Login";
 import Boliger from "./pages/Boliger";
 import EstateDetail from "./components/EstateDetails/EstateDetail";
+import Kontakt from "./pages/Kontakt";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Forside />}></Route>
         <Route path="/Boliger" element={<Boliger />}></Route>
+        <Route path="/Kontakt" element={<Kontakt />}></Route>
         <Route path="/Login" element={<LoginForm />}></Route>
         <Route path="/estate/:id" element={<EstateDetail />} />
       </Routes>
