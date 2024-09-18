@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchEstateById } from "../../providers/fetchId";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 import icon1 from "../../assets/Details/Property1.png";
 import icon2 from "../../assets/Details/Property2.png";
 import icon3 from "../../assets/Details/Property3.png";
 import icon4 from "../../assets/Details/Property4.png";
+import { IoMdCloseCircleOutline } from "react-icons/io";
 import "./EstateDetail.scss";
+
 const EstateDetail = () => {
   const { id } = useParams(); // Get the estate ID from the URL
   const [estate, setEstate] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [activeView, setActiveView] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,6 +57,37 @@ const EstateDetail = () => {
 
   const primaryImage = estate_image_rel?.[0]?.images?.image_url;
 
+  const renderContent = () => {
+    switch (activeView) {
+      case "image":
+        return (
+          <img
+            src={primaryImage || "https://via.placeholder.com/600"}
+            alt="House"
+            className="detail-image"
+          />
+        );
+      case "floor_plan":
+        return (
+          <img
+            src={floorplan || "https://via.placeholder.com/600"} // Use floorplan from Supabase
+            alt="Floor Plan"
+            className="detail-image"
+          />
+        );
+      case "map":
+        return (
+          <img
+            src="https://via.placeholder.com/600"
+            alt="Map"
+            className="detail-image"
+          />
+        );
+      default:
+        return null; // No content to render when activeView is null
+    }
+  };
+
   return (
     <section className="estate-detail">
       <article>
@@ -62,32 +99,40 @@ const EstateDetail = () => {
             <div className="top-left-details">
               <h1>{address}</h1>
               <p>
-                {cities?.zipcode},{cities?.name}
+                {cities?.zipcode}, {cities?.name}
               </p>
               <div>
                 <p>{estate_types?.name}</p>
                 <p>{num_rooms} vær</p>
                 <p>{floor_space} m²</p>
               </div>
-              <p> set {num_clicks} gange</p>
+              <p>Set {num_clicks} gange</p>
             </div>
             <div className="top-middle-details">
-              <img src={icon2} alt="" />
-              <img src={icon1} alt="" />
-              <img src={icon3} alt="" />
-              <img src={icon4} alt="" />
+              <img
+                src={icon2}
+                alt="Floor Plan"
+                onClick={() => setActiveView("image")}
+              />{" "}
+              <img
+                src={icon1}
+                alt="House"
+                onClick={() => setActiveView("floor_plan")}
+              />
+              <img src={icon3} alt="Map" onClick={() => setActiveView("map")} />
+              <img src={icon4} alt="Favorite" />
             </div>
+
             <div className="top-right-details">
               <div>
-                <p>Kontantpris:</p>{" "}
+                <p>Kontantpris:</p>
                 <h1>{price ? `${price.toLocaleString()} DKK` : "N/A"}</h1>
               </div>
               <p>
-                Udbetaling:
-                {payout ? `${payout.toLocaleString()} DKK` : "N/A"}
-              </p>{" "}
+                Udbetaling: {payout ? `${payout.toLocaleString()} DKK` : "N/A"}
+              </p>
               <p>
-                Ejerudgift per måned:
+                Ejerudgift per måned:{" "}
                 {gross ? `${gross.toLocaleString()} DKK` : "N/A"}
               </p>
             </div>
@@ -176,7 +221,16 @@ const EstateDetail = () => {
             </>
           )}
         </div>
-      </article>
+      </article>{" "}
+      {activeView && (
+        <div className="content-display">
+          {renderContent()}
+          <IoMdCloseCircleOutline
+            className="close-button"
+            onClick={() => setActiveView(null)}
+          />
+        </div>
+      )}
     </section>
   );
 };
