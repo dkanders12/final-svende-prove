@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchEstatesWithTypeAndImages } from "../../providers/Estates"; // Adjust the path
 import "./FrontEstates.scss";
+import { Link } from "react-router-dom";
 const EstatesList = () => {
   const [estates, setEstates] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -31,6 +32,7 @@ const EstatesList = () => {
 
 const EstateCard = ({ estate }) => {
   const {
+    id,
     address,
     price,
     num_rooms,
@@ -46,24 +48,26 @@ const EstateCard = ({ estate }) => {
 
   return (
     <div className="estate-card">
-      {primaryImage ? (
-        <img src={primaryImage} alt={address} className="estate-image" />
-      ) : (
-        <p>No image available</p> // Display this message if no image URL is found
-      )}
-      <div className="estate-details">
-        <h3>{address}</h3>
-        <div id="city">
-          <p>{cities?.zipcode}</p>
-          <p>{cities?.name}</p>
-        </div>{" "}
-        <p>{estate_types?.name}</p>
-        <p>
-          {num_rooms} værelser, {ground_space} m²
-        </p>
-        <i id="energy">{energy_labels?.letter}</i>
-        <p className="estate-price">{price.toLocaleString()} DKK</p>
-      </div>
+      <Link to={`/estate/${id}`}>
+        {primaryImage ? (
+          <img src={primaryImage} alt={address} className="estate-image" />
+        ) : (
+          <p>No image available</p> // Display this message if no image URL is found
+        )}
+        <div className="estate-details">
+          <h3>{address}</h3>
+          <div id="city">
+            <p>{cities?.zipcode}</p>
+            <p>{cities?.name}</p>
+          </div>{" "}
+          <p>{estate_types?.name}</p>
+          <p>
+            {num_rooms} værelser, {ground_space} m²
+          </p>
+          <i id="energy">{energy_labels?.letter}</i>
+          <p className="estate-price">{price.toLocaleString()} DKK</p>
+        </div>
+      </Link>
     </div>
   );
 };

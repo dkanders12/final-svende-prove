@@ -1,0 +1,56 @@
+.admin-panel {
+  display: flex;
+  flex-direction: column;
+  ul {
+    list-style-type: none;
+    width: 700px;
+    li {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid black;
+      align-items: center;
+      input {
+        height: 40px;
+        width: 200px;
+        margin: 10px;
+      }
+      textarea {
+        height: 200px;
+        width: 300px;
+        padding: 10px;
+        margin: 10px;
+      }
+    }
+    button {
+      height: 30px;
+      margin: 10px;
+    }
+    .middle-admin {
+      display: flex;
+      justify-content: space-between;
+      width: 70%;
+    }
+    .buttons {
+      display: flex;
+      gap: 8px;
+      .red-btn {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .save-btn {
+        background-color: green;
+        color: white;
+        border: none;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}

@@ -1,6 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { supabase } from "../../providers/LoginController"; // Make sure this is the correct path
+import { supabase } from "../../providers/LoginController"; // Adjust the path
 import "./kontaktForm.scss";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+
+// Fix for missing leaflet marker icons
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl:
+    "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png",
+  iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
+});
+
 const ContactForm = () => {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
@@ -33,13 +46,15 @@ const ContactForm = () => {
       setStatus("Please fill in all fields");
       return;
     }
+    const created_at = new Date().toISOString(); // Create timestamp in ISO format
 
     try {
       const { data, error } = await supabase.from("contact_messages").insert([
         {
           name,
           message,
-          employee_id: employeeId, // Employee ID from the selected option
+          employee_id: employeeId,
+          created_at,
         },
       ]);
 
@@ -58,50 +73,71 @@ const ContactForm = () => {
     }
   };
 
+  // Coordinates for Øster Uttrup Vej 1, Aalborg
+  const position = [57.0477, 9.9669];
+
   return (
     <section className="message-form">
-      <h2>Contact Us</h2>
-      {status && <p>{status}</p>}
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
+      <article className="form-left">
+        <h2>Kontakt</h2>
+        <p>
+          Udfyld og send formularen og vi vil hurtigst muligt besvare dine
+          spørgsmål.
+        </p>
+        <form onSubmit={handleSubmit}>
+          <label>
+            Navn*:
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              placeholder="Indtast dit navn"
+            />
+          </label>
+
+          <label>
+            Medarbejder*:
+            <select
+              value={employeeId}
+              onChange={(e) => setEmployeeId(e.target.value)}
+              required
+            >
+              <option value="">Vælg medarbejder</option>
+              {employees.map((employee) => (
+                <option key={employee.id} value={employee.id}>
+                  {employee.firstname} {employee.lastname}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label>
+            Besked*:
+            <textarea
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              required
+              placeholder="Indtast din besked"
+            />
+          </label>
+
+          <button type="submit">Send</button>
+        </form>
+      </article>
+
+      <article className="form-right">
+        <p>Find os her:</p>
+        <MapContainer center={position} zoom={13} className="leaflet-container">
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
-        </label>
-
-        <label>
-          Select Employee:
-          <select
-            value={employeeId}
-            onChange={(e) => setEmployeeId(e.target.value)}
-            required
-          >
-            <option value="">Select an Employee</option>
-            {employees.map((employee) => (
-              <option key={employee.id} value={employee.id}>
-                {employee.firstname} {employee.lastname}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        {/* Message Input */}
-        <label>
-          Message:
-          <textarea
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            required
-          />
-        </label>
-
-        {/* Submit Button */}
-        <button type="submit">Send Message</button>
-      </form>
+          <Marker position={position}>
+            <Popup>Øster Uttrup Vej 1, 9000 Aalborg</Popup>
+          </Marker>
+        </MapContainer>
+      </article>
     </section>
   );
 };

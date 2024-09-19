@@ -123,8 +123,6 @@ const BoligCardsL = ({ estate }) => {
   return (
     <div className="bolig-card">
       <Link to={`/estate/${id}`} className="card-link">
-        {" "}
-        {/* Navigate to the detail page */}
         {primaryImage ? (
           <img
             src={primaryImage}
