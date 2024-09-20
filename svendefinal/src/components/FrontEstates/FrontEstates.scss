@@ -55,3 +55,15 @@
     margin: 5px 0;
   }
 }
+@media (max-width: 768px) {
+  .estates-container {
+    display: flex;
+    flex-direction: column;
+    .estate-card:nth-child(2) {
+      margin: 0;
+    }
+    .estate-card {
+      margin: 0;
+    }
+  }
+}

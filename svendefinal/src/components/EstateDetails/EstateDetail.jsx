@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchEstateById } from "../../providers/fetchId";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
+
 import icon1 from "../../assets/Details/Property1.png";
 import icon2 from "../../assets/Details/Property2.png";
 import icon3 from "../../assets/Details/Property3.png";

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import { FaBars } from "react-icons/fa";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { IoMdCloseCircleOutline } from "react-icons/io";
 import header from "../../assets/Logo.png";
 import "./Navbar.scss";
 
@@ -12,9 +13,9 @@ const Navbar = () => {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
-
   const handleNavLinkClick = (path) => {
     setActiveLink(path);
+    setMenuOpen(false);
   };
 
   return (
@@ -23,7 +24,7 @@ const Navbar = () => {
         <img src={header} alt="Header" />
 
         <div className="burger-menu" onClick={toggleMenu}>
-          <FaBars />
+          {menuOpen ? <IoMdCloseCircleOutline /> : <GiHamburgerMenu />}
         </div>
       </div>
       <div id="lowerNav" className={menuOpen ? "open" : ""}>

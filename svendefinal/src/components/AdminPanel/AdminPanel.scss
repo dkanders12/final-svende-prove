@@ -54,3 +54,11 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .admin-panel {
+    ul {
+      width: 500px;
+    }
+  }
+}

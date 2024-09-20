@@ -36,3 +36,9 @@
     }
   }
 }
+@media (max-width: 768px) {
+  #gap {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

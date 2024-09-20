@@ -65,3 +65,9 @@
     margin: 5px 0;
   }
 }
+@media (max-width: 768px) {
+  #sorting-right {
+    flex-wrap: wrap;
+    margin-left: 50px;
+  }
+}

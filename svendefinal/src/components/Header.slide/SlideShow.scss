@@ -39,7 +39,10 @@
 /* Optional: Media Queries for responsiveness */
 @media screen and (max-width: 768px) {
   .slideshow-container {
-    height: 300px; /* Adjust height for mobile */
+    height: 300px;
+    .arrow {
+      display: none;
+    } /* Adjust height for mobile */
   }
 
   .arrow {

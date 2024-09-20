@@ -26,3 +26,18 @@
     }
   }
 }
+@media (max-width: 768px) {
+  .loginSide {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    .edit {
+      flex-direction: column;
+
+      .logout {
+        border: none;
+        margin-top: 20px;
+      }
+    }
+  }
+}
