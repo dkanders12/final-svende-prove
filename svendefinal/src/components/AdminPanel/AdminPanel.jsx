@@ -1,69 +1,80 @@
 import React, { useState, useEffect } from "react";
-import { supabase } from "../../providers/LoginController"; // Adjust the path as needed
+import { supabase } from "../../providers/LoginController";
 import "./AdminPanel.scss";
-
+// Importerer React, og de nødvendige hooks useState og useEffect fra React biblioteket.
+// supabase bliver brugt til at interagere med databasen, og AdminPanel.scss er til styling.
+// dependency
 const AdminPanel = () => {
   const [reviews, setReviews] = useState([]);
   const [editingReview, setEditingReview] = useState(null);
   const [newReviewText, setNewReviewText] = useState("");
   const [newContentText, setNewContentText] = useState("");
-  const [newTimeText, setNewTimeText] = useState(""); // State for new created_at timestamp
-
-  // Fetch all reviews from the database
+  // useState hooks bruges til at holde styr på reviews, hvilken review der bliver redigeret, og indholdet af review.
+  //hooks
+  // Henter alle reviews fra Supabase databasen, når komponenten loader.
   useEffect(() => {
     const fetchReviews = async () => {
       const { data, error } = await supabase.from("reviews").select("*");
       if (error) {
-        console.error("Error fetching reviews:", error);
+        console.error("Fejl ved hentning af reviews:", error);
       } else {
         setReviews(data);
+        // Hvis der ikke er fejl, sætter den reviews dataen til state.
       }
     };
+    //hooks
 
     fetchReviews();
   }, []);
+  //dependency Array
+  // useEffect kører kun én gang, når komponenten mountes, for at hente reviews fra databasen.
 
-  // Handle delete review
+  // Funktion til at slette et review ved at bruge review id
   const handleDelete = async (id) => {
     const { error } = await supabase.from("reviews").delete().eq("id", id);
+    //promises
     if (error) {
-      console.error("Error deleting review:", error);
+      console.error("Fejl ved sletning af review:", error);
     } else {
       setReviews(reviews.filter((review) => review.id !== id));
+      // Filtrerer det slettede review ud af state, så UI opdateres.
     }
+    //conditions
   };
 
-  // Handle update review
+  // Funktion til at opdatere et review med nyt tekstindhold og dato
   const handleUpdate = async (id) => {
-    // Generate a new timestamp for the created_at field
-    const newCreatedAt = new Date().toISOString(); // Current date and time in ISO format
+    const newCreatedAt = new Date().toISOString();
+    // Får den nuværende dato og tid i ISO-format.
 
     const { error } = await supabase
       .from("reviews")
       .update({
-        title: newReviewText, // Update title
-        content: newContentText, // Update content
-        created_at: newCreatedAt, // Update created_at with the new time
+        title: newReviewText,
+        content: newContentText,
+        created_at: newCreatedAt,
       })
       .eq("id", id);
+    // Opdaterer det review, som matcher id, med nye værdier for titel, indhold og dato.
 
     if (error) {
-      console.error("Error updating review:", error);
+      console.error("Fejl ved opdatering af review:", error);
     } else {
-      // Update local state after successful update
       setReviews(
         reviews.map((review) =>
+          //iterations
           review.id === id
             ? {
                 ...review,
                 title: newReviewText,
                 content: newContentText,
-                created_at: newCreatedAt, // Update the state with the new time
+                created_at: newCreatedAt,
               }
             : review
         )
+        // Hvis opdateringen er succesfuld, opdateres reviews i state og redigeringsmode afsluttes.
       );
-      setEditingReview(null); // Stop editing mode
+      setEditingReview(null);
     }
   };
 
@@ -78,20 +89,23 @@ const AdminPanel = () => {
                 <input
                   type="text"
                   value={newReviewText}
-                  placeholder="Edit title"
+                  placeholder="Redigér titel"
                   onChange={(e) => setNewReviewText(e.target.value)}
                 />
+                {/* Inputfelt til at redigere titlen på et review. */}
 
                 <textarea
                   value={newContentText}
-                  placeholder="Edit content"
+                  placeholder="Redigér indhold"
                   onChange={(e) => setNewContentText(e.target.value)}
                 />
+                {/* Tekstfelt til at redigere indholdet af et review. */}
               </>
             ) : (
+              /*ternary oprator */
               <>
                 <div className="middle-admin">
-                  <span> {review.title}</span>
+                  <span>{review.title}</span>
                   <br />
                   <span>
                     {new Date(review.created_at).toLocaleDateString("en-GB", {
@@ -100,6 +114,7 @@ const AdminPanel = () => {
                       day: "numeric",
                     })}
                   </span>
+                  {/* Viser titlen og datoen for hvornår reviewet blev oprettet i et læsbart format. */}
                 </div>
               </>
             )}
@@ -108,21 +123,25 @@ const AdminPanel = () => {
                 className="red-btn"
                 onClick={() => handleDelete(review.id)}
               >
-                Delete
+                Slet
               </button>
+              {/* Knap til at slette et review */}
+
               {editingReview === review.id ? (
-                <button onClick={() => handleUpdate(review.id)}>Save</button>
+                <button onClick={() => handleUpdate(review.id)}>Gem</button>
               ) : (
+                // Hvis review er i redigeringstilstand, viser den en gem-knap for at opdatere reviewet.
                 <button
                   className="save-btn"
                   onClick={() => {
                     setEditingReview(review.id);
-                    setNewReviewText(review.title); // Pre-fill title for editing
-                    setNewContentText(review.content); // Pre-fill content for editing
+                    setNewReviewText(review.title);
+                    setNewContentText(review.content);
                   }}
                 >
-                  Edit
+                  Redigér
                 </button>
+                // Hvis review ikke er i redigeringstilstand, viser den en redigeringsknap.
               )}
             </div>
           </li>

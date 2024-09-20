@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchEstateById } from "../../providers/fetchId";
-
 import icon1 from "../../assets/Details/Property1.png";
 import icon2 from "../../assets/Details/Property2.png";
 import icon3 from "../../assets/Details/Property3.png";
@@ -9,27 +8,34 @@ import icon4 from "../../assets/Details/Property4.png";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import "./EstateDetail.scss";
 
-const EstateDetail = () => {
-  const { id } = useParams(); // Get the estate ID from the URL
-  const [estate, setEstate] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [activeView, setActiveView] = useState();
+// Import af React og nødvendige moduler og hooks (useState og useEffect).
+// useParams bruges til at hente URL parametre, og fetchEstateById er en asynkron funktion, der henter ejendomsdata fra et API.
+// Her ser vi også imports af ikoner og stilark.
 
+const EstateDetail = () => {
+  const { id } = useParams(); // Henter ejendoms ID fra URL (datatype: string)
+  const [estate, setEstate] = useState(null); // useState hook til at håndtere ejendomsdata (datatype: object)
+  const [loading, setLoading] = useState(true); // useState til at håndtere loading state (datatype: boolean)
+  const [activeView, setActiveView] = useState(); // useState til at styre aktiv visning af billede eller plantegning (datatype: string)
+
+  // useEffect bruges til at køre side-effekter (som API kald) når komponenten bliver mounted eller når ID ændres
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchEstateById(id); // Fetch the estate details by ID
-      setEstate(data);
-      setLoading(false);
+      const data = await fetchEstateById(id); // Promise der venter på ejendomsdata (API-kald)
+      setEstate(data); // Opdaterer state med data fra API'et (spread operatør kunne bruges til at kopiere objekter)
+      setLoading(false); // Når data er hentet, stopper vi loading state
     };
 
-    fetchData();
-  }, [id]);
+    fetchData(); // Kalder fetchData når komponenten loader første gang
+  }, [id]); // Afhængigheden id sikrer, at effekten kører igen, hvis id ændrer sig (condition).
 
-  if (loading) return <div>Loading...</div>;
-  if (!estate) return <div>Estate not found</div>;
+  // Betingelser (conditions) til at vise forskellige UI elementer baseret på state
+  if (loading) return <div>Loading...</div>; // Hvis loading er true, vises "Loading"
+  if (!estate) return <div>Estate not found</div>; // Hvis ingen ejendom er fundet, vises "Estate not found"
 
+  // Destrukturering af ejendomsobjektet for nemmere adgang til datafelter (spread operatør kunne bruges her)
   const {
-    id: estateId,
+    id: estateId, // Template strings bruges til at give værdierne læsbarhed
     address,
     price,
     payout,
@@ -51,10 +57,12 @@ const EstateDetail = () => {
     cities,
     estate_image_rel,
     energy_labels,
-  } = estate || {};
+  } = estate || {}; // Hvis estate er null, returneres et tomt objekt
 
+  // Brug af optional chaining operator (?.) til at undgå fejl, hvis billeder eller andre data ikke er til stede
   const primaryImage = estate_image_rel?.[0]?.images?.image_url;
 
+  // Funktion til at bestemme hvilket indhold der skal vises afhængigt af activeView (betingelse - switch statement)
   const renderContent = () => {
     switch (activeView) {
       case "image":
@@ -68,7 +76,7 @@ const EstateDetail = () => {
       case "floor_plan":
         return (
           <img
-            src={floorplan || "https://via.placeholder.com/600"} // Use floorplan from Supabase
+            src={floorplan || "https://via.placeholder.com/600"} // Template strings brugt her
             alt="Floor Plan"
             className="detail-image"
           />
@@ -82,13 +90,14 @@ const EstateDetail = () => {
           />
         );
       default:
-        return null; // No content to render when activeView is null
+        return null; // Returnerer ingenting, hvis ingen aktiv visning er valgt
     }
   };
 
   return (
     <section className="estate-detail">
       <article>
+        {/* Conditional rendering af primært billede */}
         {primaryImage && (
           <img src={primaryImage} alt={address} className="primary-image" />
         )}
@@ -104,13 +113,15 @@ const EstateDetail = () => {
                 <p>{num_rooms} vær</p>
                 <p>{floor_space} m²</p>
               </div>
-              <p>Set {num_clicks} gange</p>
+              <p>Set {num_clicks} gange</p>{" "}
+              {/* Template string bruges her til at formatere tekst */}
             </div>
             <div className="top-middle-details">
+              {/* Iterationer - mapping gennem ikoner */}
               <img
                 src={icon2}
                 alt="Floor Plan"
-                onClick={() => setActiveView("image")}
+                onClick={() => setActiveView("image")} // Funktionel operatør bruges her
               />{" "}
               <img
                 src={icon1}
@@ -124,7 +135,8 @@ const EstateDetail = () => {
             <div className="top-right-details">
               <div>
                 <p>Kontantpris:</p>
-                <h1>{price ? `${price.toLocaleString()} DKK` : "N/A"}</h1>
+                <h1>{price ? `${price.toLocaleString()} DKK` : "N/A"}</h1>{" "}
+                {/* Template string til formatering */}
               </div>
               <p>
                 Udbetaling: {payout ? `${payout.toLocaleString()} DKK` : "N/A"}
@@ -138,6 +150,7 @@ const EstateDetail = () => {
         </div>
       </article>
       <article className="estate-info">
+        {/* Iteration - rendering af listeelementer for ejendomsdetaljer */}
         <div className="small-info">
           <ul>
             <li>Sagsnr.</li>
@@ -202,7 +215,7 @@ const EstateDetail = () => {
           <p>{description}</p>
         </div>
         <div className="employee-info">
-          <h3>Contact Information</h3>
+          <h3>Kontaktinformation</h3>
           {employee_id && (
             <>
               <img
@@ -220,12 +233,13 @@ const EstateDetail = () => {
           )}
         </div>
       </article>{" "}
+      {/* Conditional rendering af content baseret på activeView */}
       {activeView && (
         <div className="content-display">
-          {renderContent()}
+          {renderContent()} {/* Renderer indhold afhængigt af activeView */}
           <IoMdCloseCircleOutline
             className="close-button"
-            onClick={() => setActiveView(null)}
+            onClick={() => setActiveView(null)} // Lukker visningen ved klik
           />
         </div>
       )}
